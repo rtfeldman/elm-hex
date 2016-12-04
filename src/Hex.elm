@@ -1,9 +1,16 @@
-module Hex exposing (fromString)
+module Hex exposing (fromString, toString)
 
-{-| Convert a
+{-| Convert to and from Hex strings.
+
+@docs fromString, toString
 -}
 
 
+{-| Convert a hexdecimal string such as "abc94f" to a decimal integer.
+
+    Hex.fromString "a5" == Ok 165
+    Hex.fromString "hat" == Err "invalid hexadecimal string"
+-}
 fromString : String -> Result String Int
 fromString str =
     if String.isEmpty str then
@@ -26,7 +33,7 @@ fromString str =
 
             formatError err =
                 String.join " "
-                    [ toString str
+                    [ Basics.toString str
                     , "is not a valid hexadecimal string because"
                     , err
                     ]
@@ -98,4 +105,84 @@ fromStringHelp position chars accumulated =
                         recurse 15
 
                     nonHex ->
-                        Err (toString nonHex ++ " is not a valid hexadecimal character.")
+                        Err (Basics.toString nonHex ++ " is not a valid hexadecimal character.")
+
+
+{-| Convert a decimal integer to a hexdecimal string such as "abc94f"
+
+    Hex.toString 165 == Ok "a5"
+-}
+toString : Int -> String
+toString num =
+    String.fromList <|
+        if num < 0 then
+            '-' :: unsafePositiveToDigits [] (negate num)
+        else
+            unsafePositiveToDigits [] num
+
+
+{-| ONLY EVER CALL THIS WITH POSITIVE INTEGERS!
+-}
+unsafePositiveToDigits : List Char -> Int -> List Char
+unsafePositiveToDigits digits num =
+    if num < 16 then
+        unsafeToDigit num :: digits
+    else
+        unsafePositiveToDigits (unsafeToDigit (num % 16) :: digits) (num // 16)
+
+
+{-| ONLY EVER CALL THIS WITH INTEGERS BETWEEN 0 and 15!
+-}
+unsafeToDigit : Int -> Char
+unsafeToDigit num =
+    case num of
+        0 ->
+            '0'
+
+        1 ->
+            '1'
+
+        2 ->
+            '2'
+
+        3 ->
+            '3'
+
+        4 ->
+            '4'
+
+        5 ->
+            '5'
+
+        6 ->
+            '6'
+
+        7 ->
+            '7'
+
+        8 ->
+            '8'
+
+        9 ->
+            '9'
+
+        10 ->
+            'a'
+
+        11 ->
+            'b'
+
+        12 ->
+            'c'
+
+        13 ->
+            'd'
+
+        14 ->
+            'e'
+
+        15 ->
+            'f'
+
+        _ ->
+            Debug.crash ("Tried to convert " ++ toString num ++ " to hexadecimal.")
