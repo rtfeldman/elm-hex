@@ -108,9 +108,9 @@ fromStringHelp position chars accumulated =
                         Err (Basics.toString nonHex ++ " is not a valid hexadecimal character.")
 
 
-{-| Convert a decimal integer to a hexdecimal string such as "abc94f"
+{-| Convert a decimal integer to a hexdecimal string such as `"abc94f"`.
 
-    Hex.toString 165 == Ok "a5"
+    Hex.toString 165 == "a5"
 -}
 toString : Int -> String
 toString num =
