@@ -50,61 +50,54 @@ fromStringHelp position chars accumulated =
             Ok accumulated
 
         char :: rest ->
-            let
-                recurse additional =
-                    fromStringHelp
-                        (position - 1)
-                        rest
-                        (accumulated + (additional * (16 ^ position)))
-            in
             case char of
                 '0' ->
-                    recurse 0
+                    fromStringHelp (position - 1) rest accumulated
 
                 '1' ->
-                    recurse 1
+                    fromStringHelp (position - 1) rest (accumulated + (16 ^ position))
 
                 '2' ->
-                    recurse 2
+                    fromStringHelp (position - 1) rest (accumulated + (2 * (16 ^ position)))
 
                 '3' ->
-                    recurse 3
+                    fromStringHelp (position - 1) rest (accumulated + (3 * (16 ^ position)))
 
                 '4' ->
-                    recurse 4
+                    fromStringHelp (position - 1) rest (accumulated + (4 * (16 ^ position)))
 
                 '5' ->
-                    recurse 5
+                    fromStringHelp (position - 1) rest (accumulated + (5 * (16 ^ position)))
 
                 '6' ->
-                    recurse 6
+                    fromStringHelp (position - 1) rest (accumulated + (6 * (16 ^ position)))
 
                 '7' ->
-                    recurse 7
+                    fromStringHelp (position - 1) rest (accumulated + (7 * (16 ^ position)))
 
                 '8' ->
-                    recurse 8
+                    fromStringHelp (position - 1) rest (accumulated + (8 * (16 ^ position)))
 
                 '9' ->
-                    recurse 9
+                    fromStringHelp (position - 1) rest (accumulated + (9 * (16 ^ position)))
 
                 'a' ->
-                    recurse 10
+                    fromStringHelp (position - 1) rest (accumulated + (10 * (16 ^ position)))
 
                 'b' ->
-                    recurse 11
+                    fromStringHelp (position - 1) rest (accumulated + (11 * (16 ^ position)))
 
                 'c' ->
-                    recurse 12
+                    fromStringHelp (position - 1) rest (accumulated + (12 * (16 ^ position)))
 
                 'd' ->
-                    recurse 13
+                    fromStringHelp (position - 1) rest (accumulated + (13 * (16 ^ position)))
 
                 'e' ->
-                    recurse 14
+                    fromStringHelp (position - 1) rest (accumulated + (14 * (16 ^ position)))
 
                 'f' ->
-                    recurse 15
+                    fromStringHelp (position - 1) rest (accumulated + (15 * (16 ^ position)))
 
                 nonHex ->
                     Err (String.fromChar nonHex ++ " is not a valid hexadecimal character.")
