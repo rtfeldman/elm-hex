@@ -3,6 +3,7 @@ module Hex exposing (fromString, toString)
 {-| Convert to and from Hex strings.
 
 @docs fromString, toString
+
 -}
 
 
@@ -10,6 +11,7 @@ module Hex exposing (fromString, toString)
 
     Hex.fromString "a5" == Ok 165
     Hex.fromString "hat" == Err "invalid hexadecimal string"
+
 -}
 fromString : String -> Result String Int
 fromString str =
@@ -26,8 +28,8 @@ fromString str =
                                 |> List.tail
                                 |> Maybe.withDefault []
                     in
-                        fromStringHelp (List.length list - 1) list 0
-                            |> Result.map negate
+                    fromStringHelp (List.length list - 1) list 0
+                        |> Result.map negate
                 else
                     fromStringHelp (String.length str - 1) (String.toList str) 0
 
@@ -38,7 +40,7 @@ fromString str =
                     , err
                     ]
         in
-            Result.mapError formatError result
+        Result.mapError formatError result
 
 
 fromStringHelp : Int -> List Char -> Int -> Result String Int
@@ -55,62 +57,63 @@ fromStringHelp position chars accumulated =
                         rest
                         (accumulated + (additional * (16 ^ position)))
             in
-                case char of
-                    '0' ->
-                        recurse 0
+            case char of
+                '0' ->
+                    recurse 0
 
-                    '1' ->
-                        recurse 1
+                '1' ->
+                    recurse 1
 
-                    '2' ->
-                        recurse 2
+                '2' ->
+                    recurse 2
 
-                    '3' ->
-                        recurse 3
+                '3' ->
+                    recurse 3
 
-                    '4' ->
-                        recurse 4
+                '4' ->
+                    recurse 4
 
-                    '5' ->
-                        recurse 5
+                '5' ->
+                    recurse 5
 
-                    '6' ->
-                        recurse 6
+                '6' ->
+                    recurse 6
 
-                    '7' ->
-                        recurse 7
+                '7' ->
+                    recurse 7
 
-                    '8' ->
-                        recurse 8
+                '8' ->
+                    recurse 8
 
-                    '9' ->
-                        recurse 9
+                '9' ->
+                    recurse 9
 
-                    'a' ->
-                        recurse 10
+                'a' ->
+                    recurse 10
 
-                    'b' ->
-                        recurse 11
+                'b' ->
+                    recurse 11
 
-                    'c' ->
-                        recurse 12
+                'c' ->
+                    recurse 12
 
-                    'd' ->
-                        recurse 13
+                'd' ->
+                    recurse 13
 
-                    'e' ->
-                        recurse 14
+                'e' ->
+                    recurse 14
 
-                    'f' ->
-                        recurse 15
+                'f' ->
+                    recurse 15
 
-                    nonHex ->
-                        Err (Basics.toString nonHex ++ " is not a valid hexadecimal character.")
+                nonHex ->
+                    Err (Basics.toString nonHex ++ " is not a valid hexadecimal character.")
 
 
 {-| Convert a decimal integer to a hexdecimal string such as `"abc94f"`.
 
     Hex.toString 165 == "a5"
+
 -}
 toString : Int -> String
 toString num =
