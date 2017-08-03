@@ -35,7 +35,7 @@ fromString str =
 
             formatError err =
                 String.join " "
-                    [ Basics.toString str
+                    [ "\"" ++ str ++ "\""
                     , "is not a valid hexadecimal string because"
                     , err
                     ]
@@ -107,7 +107,7 @@ fromStringHelp position chars accumulated =
                     recurse 15
 
                 nonHex ->
-                    Err (Basics.toString nonHex ++ " is not a valid hexadecimal character.")
+                    Err (String.fromChar nonHex ++ " is not a valid hexadecimal character.")
 
 
 {-| Convert a decimal integer to a hexdecimal string such as `"abc94f"`.
