@@ -50,6 +50,10 @@ fromStringHelp position chars accumulated =
             Ok accumulated
 
         char :: rest ->
+            -- NOTE: It's important to have this call `fromStringHelp` directly.
+            -- Previously this called a helper function, but that meant this
+            -- was not tail-call optimized; it did not compile to a `while` loop
+            -- the way it does now. See 240c3d5aa4f97463b924728935d2989621e9fd6b
             case char of
                 '0' ->
                     fromStringHelp (position - 1) rest accumulated
