@@ -1,10 +1,10 @@
 module Tests exposing (..)
 
-import Test exposing (..)
 import Expect
-import Fuzz exposing (list, int, string, intRange)
-import String
+import Fuzz exposing (int, intRange, list, string)
 import Hex
+import String
+import Test exposing (..)
 
 
 all : Test
@@ -218,7 +218,7 @@ all =
                         [ first, second, third ]
                             |> List.map toString
                             |> String.join ""
-                            |> ((++) "-")
+                            |> (++) "-"
                             |> Hex.fromString
                             |> Expect.equal (Ok (negate ((first * 256) + (second * 16) + third)))
                 ]
