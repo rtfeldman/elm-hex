@@ -128,7 +128,7 @@ unsafePositiveToDigits digits num =
     if num < 16 then
         unsafeToDigit num :: digits
     else
-        unsafePositiveToDigits (unsafeToDigit (num % 16) :: digits) (num // 16)
+        unsafePositiveToDigits (unsafeToDigit (modBy 16 num) :: digits) (num // 16)
 
 
 {-| ONLY EVER CALL THIS WITH INTEGERS BETWEEN 0 and 15!
