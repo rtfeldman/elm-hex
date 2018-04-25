@@ -185,4 +185,8 @@ unsafeToDigit num =
             'f'
 
         _ ->
-            Debug.crash ("Tried to convert " ++ toString num ++ " to hexadecimal.")
+            -- if this ever gets called with a number over 15, it will never
+            -- terminate! If that happens, debug further by uncommenting this:
+            --
+            -- Debug.todo ("Tried to convert " ++ toString num ++ " to hexadecimal.")
+            unsafeToDigit num
