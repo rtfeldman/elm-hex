@@ -17,6 +17,7 @@ fromString : String -> Result String Int
 fromString str =
     if String.isEmpty str then
         Err "Empty strings are not valid hexadecimal strings."
+
     else
         let
             result =
@@ -30,6 +31,7 @@ fromString str =
                     in
                     fromStringHelp (List.length list - 1) list 0
                         |> Result.map negate
+
                 else
                     fromStringHelp (String.length str - 1) (String.toList str) 0
 
@@ -117,6 +119,7 @@ toString num =
     String.fromList <|
         if num < 0 then
             '-' :: unsafePositiveToDigits [] (negate num)
+
         else
             unsafePositiveToDigits [] num
 
@@ -127,6 +130,7 @@ unsafePositiveToDigits : List Char -> Int -> List Char
 unsafePositiveToDigits digits num =
     if num < 16 then
         unsafeToDigit num :: digits
+
     else
         unsafePositiveToDigits (unsafeToDigit (modBy 16 num) :: digits) (num // 16)
 
