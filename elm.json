@@ -1,9 +1,9 @@
 {
     "type": "package",
-    "name": "rtfeldman/hex",
+    "name": "rtfeldman/elm-hex",
     "summary": "Work with hexadecimal numbers",
     "license": "BSD-3-Clause",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "exposed-modules": [
         "Hex"
     ],
