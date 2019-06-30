@@ -10,6 +10,7 @@ module Hex exposing (fromString, toString)
 {-| Convert a hexdecimal string such as "abc94f" to a decimal integer.
 
     Hex.fromString "a5" == Ok 165
+
     Hex.fromString "hat" == Err "invalid hexadecimal string"
 
 -}
@@ -103,6 +104,24 @@ fromStringHelp position chars accumulated =
                     fromStringHelp (position - 1) rest (accumulated + (14 * (16 ^ position)))
 
                 'f' ->
+                    fromStringHelp (position - 1) rest (accumulated + (15 * (16 ^ position)))
+
+                'A' ->
+                    fromStringHelp (position - 1) rest (accumulated + (10 * (16 ^ position)))
+
+                'B' ->
+                    fromStringHelp (position - 1) rest (accumulated + (11 * (16 ^ position)))
+
+                'C' ->
+                    fromStringHelp (position - 1) rest (accumulated + (12 * (16 ^ position)))
+
+                'D' ->
+                    fromStringHelp (position - 1) rest (accumulated + (13 * (16 ^ position)))
+
+                'E' ->
+                    fromStringHelp (position - 1) rest (accumulated + (14 * (16 ^ position)))
+
+                'F' ->
                     fromStringHelp (position - 1) rest (accumulated + (15 * (16 ^ position)))
 
                 nonHex ->
