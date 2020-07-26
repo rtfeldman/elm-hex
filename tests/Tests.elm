@@ -1,7 +1,7 @@
-module Tests exposing (..)
+module Tests exposing (all, expectErr)
 
 import Expect
-import Fuzz exposing (int, intRange, list, string)
+import Fuzz exposing (int, intRange)
 import Hex
 import String
 import Test exposing (..)
@@ -100,7 +100,7 @@ all =
                         |> Hex.toString
                         |> Expect.equal "f"
             ]
-        , describe "fromHex"
+        , describe "fromString"
             [ test "with an empty string" <|
                 \() ->
                     ""
@@ -187,6 +187,36 @@ all =
                         "f"
                             |> Hex.fromString
                             |> Expect.equal (Ok 15)
+                , test "'A' works as expected" <|
+                    \() ->
+                        "A"
+                            |> Hex.fromString
+                            |> Expect.equal (Ok 10)
+                , test "'B' works as expected" <|
+                    \() ->
+                        "B"
+                            |> Hex.fromString
+                            |> Expect.equal (Ok 11)
+                , test "'C' works as expected" <|
+                    \() ->
+                        "C"
+                            |> Hex.fromString
+                            |> Expect.equal (Ok 12)
+                , test "'D' works as expected" <|
+                    \() ->
+                        "D"
+                            |> Hex.fromString
+                            |> Expect.equal (Ok 13)
+                , test "'E' works as expected" <|
+                    \() ->
+                        "E"
+                            |> Hex.fromString
+                            |> Expect.equal (Ok 14)
+                , test "'F' works as expected" <|
+                    \() ->
+                        "F"
+                            |> Hex.fromString
+                            |> Expect.equal (Ok 15)
                 , test "a known negative number works" <|
                     \() ->
                         "-abcdef01"
@@ -202,12 +232,17 @@ all =
                         "a5"
                             |> Hex.fromString
                             |> Expect.equal (Ok 165)
+                , test "uppercase hardcoded string works" <|
+                    \() ->
+                        "ABCDEF01"
+                            |> Hex.fromString
+                            |> Expect.equal (Ok 2882400001)
                 ]
             , describe "three-digit positive decimal numbers"
                 [ fuzz3 (intRange 0 9) (intRange 0 9) (intRange 0 9) "numbers work" <|
                     \first second third ->
                         [ first, second, third ]
-                            |> List.map toString
+                            |> List.map String.fromInt
                             |> String.join ""
                             |> Hex.fromString
                             |> Expect.equal (Ok ((first * 256) + (second * 16) + third))
@@ -216,7 +251,7 @@ all =
                 [ fuzz3 (intRange 0 9) (intRange 0 9) (intRange 0 9) "numbers work" <|
                     \first second third ->
                         [ first, second, third ]
-                            |> List.map toString
+                            |> List.map String.fromInt
                             |> String.join ""
                             |> (++) "-"
                             |> Hex.fromString
@@ -233,4 +268,4 @@ expectErr val =
             Expect.pass
 
         Ok okVal ->
-            Expect.fail ("Expected an Err but got " ++ toString val)
+            Expect.fail ("Expected an Err but got " ++ Debug.toString val)

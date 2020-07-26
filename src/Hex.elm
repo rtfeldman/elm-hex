@@ -10,6 +10,7 @@ module Hex exposing (fromString, toString)
 {-| Convert a hexdecimal string such as "abc94f" to a decimal integer.
 
     Hex.fromString "a5" == Ok 165
+
     Hex.fromString "hat" == Err "invalid hexadecimal string"
 
 -}
@@ -33,7 +34,7 @@ fromString str =
                         |> Result.map negate
 
                 else
-                    fromStringHelp (String.length str - 1) (String.toList str) 0
+                    fromStringHelp (String.length str - 1) (str |> String.toLower |> String.toList) 0
 
             formatError err =
                 String.join " "
