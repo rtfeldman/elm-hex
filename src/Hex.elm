@@ -34,7 +34,7 @@ fromString str =
                         |> Result.map negate
 
                 else
-                    fromStringHelp (String.length str - 1) (String.toList str) 0
+                    fromStringHelp (String.length str - 1) (str |> String.toLower |> String.toList) 0
 
             formatError err =
                 String.join " "
@@ -104,24 +104,6 @@ fromStringHelp position chars accumulated =
                     fromStringHelp (position - 1) rest (accumulated + (14 * (16 ^ position)))
 
                 'f' ->
-                    fromStringHelp (position - 1) rest (accumulated + (15 * (16 ^ position)))
-
-                'A' ->
-                    fromStringHelp (position - 1) rest (accumulated + (10 * (16 ^ position)))
-
-                'B' ->
-                    fromStringHelp (position - 1) rest (accumulated + (11 * (16 ^ position)))
-
-                'C' ->
-                    fromStringHelp (position - 1) rest (accumulated + (12 * (16 ^ position)))
-
-                'D' ->
-                    fromStringHelp (position - 1) rest (accumulated + (13 * (16 ^ position)))
-
-                'E' ->
-                    fromStringHelp (position - 1) rest (accumulated + (14 * (16 ^ position)))
-
-                'F' ->
                     fromStringHelp (position - 1) rest (accumulated + (15 * (16 ^ position)))
 
                 nonHex ->
