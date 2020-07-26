@@ -1,7 +1,7 @@
 module Tests exposing (all, expectErr)
 
 import Expect
-import Fuzz exposing (int, intRange, list, string)
+import Fuzz exposing (int, intRange)
 import Hex
 import String
 import Test exposing (..)
